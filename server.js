@@ -37,80 +37,6 @@ app.post('/member', (req, res) => {
                     if (result.length === numberOfPages) {
                         const wholeString = result.toString()
                         res.send(wholeString)
-                        // if (wholeString.search("UnitedHealthcare") !== -1) {
-                        //     if (wholeString.search("we've approved the service") !== -1) {
-                        //         const startIndex = wholeString.indexOf("Member name:")
-                        //         const nextLineBreak = wholeString.indexOf("\n", startIndex)
-                        //         const memberName = wholeString.substring(startIndex + 13, nextLineBreak)
-                        //         console.log('UnitedHealthcare member name:', memberName)
-                        //         res.send(memberName)
-                        //     } else {
-                        //         res.send('not auth')
-                        //     }
-                        // } else if (wholeString.search("Health and Human") !== -1) {
-                        //     if (wholeString.search("AUTHORIZATION FOR COMMUNITY CARE SERVICES") !== -1) {
-                        //         const startIndex = wholeString.indexOf("7. ")
-                        //         const nextLineBreak = wholeString.indexOf("\n", startIndex)
-                        //         const nextSpace = wholeString.indexOf(" ", nextLineBreak)
-                        //         const nextSpace2 = wholeString.indexOf(" ", nextSpace + 1)
-                        //         const memberName = wholeString.substring(nextLineBreak + 1, nextSpace2)
-                        //         console.log('HHSC member name:', memberName)
-                        //         res.send(memberName)
-                        //     } else {
-                        //         res.send('not auth')
-                        //     }
-                        // } else if (wholeString.search("Aetna") !== -1) {
-                        //     if (wholeString.search("SERVICE AUTHORIZATION") !== -1) {
-                        //         const startIndex = wholeString.indexOf("Member Name:")
-                        //         const nextLineBreak = wholeString.indexOf("\n", startIndex)
-                        //         const memberName = wholeString.substring(startIndex + 13, nextLineBreak)
-                        //         console.log('Aetna member name:', memberName)
-                        //         res.send(memberName)
-                        //     } else {
-                        //         res.send('not auth')
-                        //     }
-                        // } else if (wholeString.search("Molina Healthcare") !== -1) {
-                        //     if (wholeString.search("Authorization Approval Letter") !== -1 || wholeString.search("Authorization Notification") !== -1) {
-                        //         const startIndex = wholeString.indexOf("Member Name:")
-                        //         const nextLineBreak = wholeString.indexOf("\n", startIndex)
-                        //         const memberName = wholeString.substring(startIndex + 13, nextLineBreak)
-                        //         if (memberName.search("Requesting Provider") !== -1) {
-                        //             const correctMemberName = memberName.substring(0, memberName.search("Requesting Provider"))
-                        //             console.log('Molina member name:', correctMemberName)
-                        //             res.send(correctMemberName)
-                        //         } else {
-                        //             console.log('Molina member name:', memberName)
-                        //             res.send(memberName)
-                        //         }
-                        //     } else {
-                        //         res.send('not auth')
-                        //     }
-                        // } else if (wholeString.search("Superior Health Plan") !== -1) {
-                        //     if (wholeString.search("Notification of Authorization") !== -1) {
-                        //         const startIndex = wholeString.indexOf("Member Name:")
-                        //         const nextLineBreak = wholeString.indexOf("\n", startIndex)
-                        //         const memberName = wholeString.substring(startIndex + 13, nextLineBreak)
-                        //         console.log('Superior member name:', memberName)
-                        //         res.send(memberName)
-                        //     } else {
-                        //         res.send('not auth')
-                        //     }
-                        // } else if (wholeString.search("Cook Childrens") !== -1) {
-                        //     if (wholeString.search("Authorization approval letters were sent") !== -1) {
-                        //         const startIndex = wholeString.indexOf("Case Name")
-                        //         const nextLineBreak = wholeString.indexOf("\n", startIndex)
-                        //         const nextSpace = wholeString.indexOf(" ", nextLineBreak)
-                        //         const nextSpace2 = wholeString.indexOf(" ", nextSpace + 1)
-                        //         const memberName = wholeString.substring(nextLineBreak + 1, nextSpace2)
-                        //         console.log('Cook member name:', memberName)
-                        //         res.send(memberName)
-                        //     } else {
-                        //         res.send('not auth')
-                        //     }
-                        // } else {
-                        //     console.log('no insurance found')
-                        //     res.send('no insurance found')
-                        // }
                     }
                 })
                 .catch(err => {
@@ -122,6 +48,84 @@ app.post('/member', (req, res) => {
 
     testFunc()
 
+})
+
+app.post('/text', (req, res) => {
+    const { text } = req.body
+    if (text.search("UnitedHealthcare") !== -1) {
+        if (text.search("we've approved the service") !== -1) {
+            const startIndex = text.indexOf("Member name:")
+            const nextLineBreak = text.indexOf("\n", startIndex)
+            const memberName = text.substring(startIndex + 13, nextLineBreak)
+            console.log('UnitedHealthcare member name:', memberName)
+            res.send(memberName)
+        } else {
+            res.send('not auth')
+        }
+    } else if (text.search("Health and Human") !== -1) {
+        if (text.search("AUTHORIZATION FOR COMMUNITY CARE SERVICES") !== -1) {
+            const startIndex = text.indexOf("7. ")
+            const nextLineBreak = text.indexOf("\n", startIndex)
+            const nextSpace = text.indexOf(" ", nextLineBreak)
+            const nextSpace2 = text.indexOf(" ", nextSpace + 1)
+            const memberName = text.substring(nextLineBreak + 1, nextSpace2)
+            console.log('HHSC member name:', memberName)
+            res.send(memberName)
+        } else {
+            res.send('not auth')
+        }
+    } else if (text.search("Aetna") !== -1) {
+        if (text.search("SERVICE AUTHORIZATION") !== -1) {
+            const startIndex = text.indexOf("Member Name:")
+            const nextLineBreak = text.indexOf("\n", startIndex)
+            const memberName = text.substring(startIndex + 13, nextLineBreak)
+            console.log('Aetna member name:', memberName)
+            res.send(memberName)
+        } else {
+            res.send('not auth')
+        }
+    } else if (text.search("Molina Healthcare") !== -1) {
+        if (text.search("Authorization Approval Letter") !== -1 || text.search("Authorization Notification") !== -1) {
+            const startIndex = text.indexOf("Member Name:")
+            const nextLineBreak = text.indexOf("\n", startIndex)
+            const memberName = text.substring(startIndex + 13, nextLineBreak)
+            if (memberName.search("Requesting Provider") !== -1) {
+                const correctMemberName = memberName.substring(0, memberName.search("Requesting Provider"))
+                console.log('Molina member name:', correctMemberName)
+                res.send(correctMemberName)
+            } else {
+                console.log('Molina member name:', memberName)
+                res.send(memberName)
+            }
+        } else {
+            res.send('not auth')
+        }
+    } else if (text.search("Superior Health Plan") !== -1) {
+        if (text.search("Notification of Authorization") !== -1) {
+            const startIndex = text.indexOf("Member Name:")
+            const nextLineBreak = text.indexOf("\n", startIndex)
+            const memberName = text.substring(startIndex + 13, nextLineBreak)
+            console.log('Superior member name:', memberName)
+            res.send(memberName)
+        } else {
+            res.send('not auth')
+        }
+    } else if (text.search("Cook Childrens") !== -1) {
+        if (text.search("Authorization approval letters were sent") !== -1) {
+            const startIndex = text.indexOf("Case Name")
+            const nextLineBreak = text.indexOf("\n", startIndex)
+            const nextSpace = text.indexOf(" ", nextLineBreak)
+            const nextSpace2 = text.indexOf(" ", nextSpace + 1)
+            const memberName = text.substring(nextLineBreak + 1, nextSpace2)
+            console.log('Cook member name:', memberName)
+            res.send(memberName)
+        } else {
+            res.send('not auth')
+        }
+    } else {
+        console.log('no insurance found')
+        res.send('no insurance found')
+    }
 })
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
