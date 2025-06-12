@@ -6,9 +6,8 @@ const PORT = process.env.PORT || 3500
 
 app.use(express.static(__dirname + '/public'))
 
-app.use(express.json())
-
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json({limit: "50mb", extended: true}))
+app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000}))
 
 app.post('/member', (req, res) => {
     const { content } = req.body
