@@ -14,7 +14,7 @@ app.post('/member', (req, res) => {
     const testFunc = async () => {
         let result = []
         let numberOfPages = 0
-        const pngPages = await pdfToPng(content, {
+        const pngPages = await pdfToPng(Buffer.from(content, 'base64'), {
             disableFontFace: false,
             useSystemFonts: false,
             enableXfa: false,
