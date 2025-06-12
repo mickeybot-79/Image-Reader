@@ -43,6 +43,8 @@ app.post('/member', (req, res) => {
                                 const memberName = wholeString.substring(startIndex + 13, nextLineBreak)
                                 console.log('UnitedHealthcare member name:', memberName)
                                 res.send(memberName)
+                            } else {
+                                res.send('not auth')
                             }
                         } else if (wholeString.search("Health and Human") !== -1) {
                             if (wholeString.search("AUTHORIZATION FOR COMMUNITY CARE SERVICES") !== -1) {
@@ -53,6 +55,8 @@ app.post('/member', (req, res) => {
                                 const memberName = wholeString.substring(nextLineBreak + 1, nextSpace2)
                                 console.log('HHSC member name:', memberName)
                                 res.send(memberName)
+                            } else {
+                                res.send('not auth')
                             }
                         } else if (wholeString.search("Aetna") !== -1) {
                             if (wholeString.search("SERVICE AUTHORIZATION") !== -1) {
@@ -61,6 +65,8 @@ app.post('/member', (req, res) => {
                                 const memberName = wholeString.substring(startIndex + 13, nextLineBreak)
                                 console.log('Aetna member name:', memberName)
                                 res.send(memberName)
+                            } else {
+                                res.send('not auth')
                             }
                         } else if (wholeString.search("Molina Healthcare") !== -1) {
                             if (wholeString.search("Authorization Approval Letter") !== -1 || wholeString.search("Authorization Notification") !== -1) {
@@ -75,6 +81,8 @@ app.post('/member', (req, res) => {
                                     console.log('Molina member name:', memberName)
                                     res.send(memberName)
                                 }
+                            } else {
+                                res.send('not auth')
                             }
                         } else if (wholeString.search("Superior Health Plan") !== -1) {
                             if (wholeString.search("Notification of Authorization") !== -1) {
@@ -83,6 +91,8 @@ app.post('/member', (req, res) => {
                                 const memberName = wholeString.substring(startIndex + 13, nextLineBreak)
                                 console.log('Superior member name:', memberName)
                                 res.send(memberName)
+                            } else {
+                                res.send('not auth')
                             }
                         } else if (wholeString.search("Cook Childrens") !== -1) {
                             if (wholeString.search("Authorization approval letters were sent") !== -1) {
@@ -93,6 +103,8 @@ app.post('/member', (req, res) => {
                                 const memberName = wholeString.substring(nextLineBreak + 1, nextSpace2)
                                 console.log('Cook member name:', memberName)
                                 res.send(memberName)
+                            } else {
+                                res.send('not auth')
                             }
                         } else {
                             console.log('no insurance found')
