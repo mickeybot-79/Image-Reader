@@ -11,7 +11,7 @@ app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000
 
 app.post('/png', (req, res) => {
     console.log('image request rcvd')
-    console.log(req.origin)
+    console.log(req)
     const { content } = req.body
     const convertPngFunc = async () => {
         let result = []
@@ -55,37 +55,6 @@ app.post('/png', (req, res) => {
     convertPngFunc()
 
 })
-
-// app.post('/text', (req, res) => {
-//     console.log('text request rcvd')
-//     const { pages, total } = req.body
-//     console.log(pages)
-//     const pagesArray = pages.split('')
-//     let result = []
-//     const readPngFunc = async () => {
-//         for (let i = 0; i < total; i++) {
-
-//             await Tesseract.recognize(
-//                 pages[i].content,
-//                 'eng',
-//             )
-//                 .then(({ data: { text } }) => {
-//                     result.push(text)
-//                     if (result.length === total) {
-//                         const wholeString = result.toString()
-//                         console.log('text response sent')
-//                         res.send(wholeString)
-//                     }
-//                 })
-//                 .catch(err => {
-//                     console.error('Error during OCR:', err)
-//                     res.send(err)
-//                 })
-//         }
-//     }
-
-//     readPngFunc()
-// })
 
 app.post('/read', (req, res) => {
     console.log('reading request rcvd')
