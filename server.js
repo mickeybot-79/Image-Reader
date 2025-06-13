@@ -92,7 +92,7 @@ app.post('/read', (req, res) => {
             res.send('not auth')
         }
     } else if (text.search("Molina Healthcare") !== -1) {
-        if (text.search("Authorization Approval Letter") !== -1 || text.search("Authorization Notification") !== -1) {
+        if (text.search("Authorization Notification") !== -1) {
             const startIndex = text.indexOf("Member Name:")
             const nextLineBreak = text.indexOf("\n", startIndex)
             const memberName = text.substring(startIndex + 13, nextLineBreak)
