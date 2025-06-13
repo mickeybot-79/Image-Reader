@@ -10,6 +10,7 @@ app.use(express.json({limit: "50mb", extended: true}))
 app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000}))
 
 app.post('/member', (req, res) => {
+    console.log('member request rcvd')
     const { content } = req.body
     const testFunc = async () => {
         let result = []
@@ -51,6 +52,7 @@ app.post('/member', (req, res) => {
 })
 
 app.post('/text', (req, res) => {
+    console.log('reading request rcvd')
     const { text } = req.body
     if (text.search("UnitedHealthcare") !== -1) {
         if (text.search("we've approved the service") !== -1) {
