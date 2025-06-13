@@ -21,7 +21,7 @@ app.post('/member', (req, res) => {
             enableXfa: false,
             viewportScale: 2.0,
             outputFileMaskFunc: (pageNumber) => `page_${pageNumber}.png`,
-            pagesToProcess: [1, 2, 3, 4, 5, 6],
+            pagesToProcess: [1, 2, 3, 4],
             strictPagesToProcess: false,
             verbosityLevel: 0,
         })
