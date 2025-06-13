@@ -85,7 +85,7 @@ app.post('/read', (req, res) => {
         if (text.search("SERVICE AUTHORIZATION") !== -1) {
             const startIndex = text.indexOf("Member Name")
             const nextLineBreak = text.indexOf("\n", startIndex)
-            const memberName = text.substring(startIndex + 14, nextLineBreak)
+            const memberName = text.substring(startIndex + 13, nextLineBreak)
             console.log('Aetna member name:', memberName)
             res.send(memberName)
         } else {
@@ -95,7 +95,7 @@ app.post('/read', (req, res) => {
         if (text.search("Authorization Notification") !== -1) {
             const startIndex = text.indexOf("Member Name")
             const nextLineBreak = text.indexOf("\n", startIndex)
-            const memberName = text.substring(startIndex + 14, nextLineBreak)
+            const memberName = text.substring(startIndex + 13, nextLineBreak)
             if (memberName.search("Requesting Provider") !== -1) {
                 const correctMemberName = memberName.substring(0, memberName.search("Requesting Provider"))
                 console.log('Molina member name:', correctMemberName)
@@ -111,7 +111,7 @@ app.post('/read', (req, res) => {
         if (text.search("Notification of Authorization") !== -1) {
             const startIndex = text.indexOf("Member Name")
             const nextLineBreak = text.indexOf("\n", startIndex)
-            const memberName = text.substring(startIndex + 14, nextLineBreak)
+            const memberName = text.substring(startIndex + 13, nextLineBreak)
             console.log('Superior member name:', memberName)
             res.send(memberName)
         } else {
