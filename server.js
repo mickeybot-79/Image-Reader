@@ -21,6 +21,7 @@ app.post('/member', (req, res) => {
             enableXfa: false,
             viewportScale: 2.0,
             outputFileMaskFunc: (pageNumber) => `page_${pageNumber}.png`,
+            pagesToProcess: [1, 2, 3, 4, 5, 6],
             strictPagesToProcess: false,
             verbosityLevel: 0,
         })
@@ -37,6 +38,7 @@ app.post('/member', (req, res) => {
                     result.push(text)
                     if (result.length === numberOfPages) {
                         const wholeString = result.toString()
+                        console.log('response sent')
                         res.send(wholeString)
                     }
                 })
