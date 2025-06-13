@@ -13,7 +13,7 @@ app.post('/png', (req, res) => {
     console.log('image request rcvd')
     const { content } = req.body
     const convertPngFunc = async () => {
-        //let result = []
+        let result = []
         let numberOfPages = 0
         const pngPages = await pdfToPng(Buffer.from(content, 'base64'), {
             disableFontFace: false,
@@ -27,50 +27,20 @@ app.post('/png', (req, res) => {
         })
 
         numberOfPages = pngPages.length
-        console.log('image response sent')
-        res.send({'pages': pngPages, 'total': numberOfPages})
+        // console.log('image response sent')
+        // res.send({'pages': pngPages, 'total': numberOfPages})
 
-        // for (let i = 0; i < pngPages.length; i++) {
-
-        //     await Tesseract.recognize(
-        //         pngPages[i].content,
-        //         'eng',
-        //     )
-        //         .then(({ data: { text } }) => {
-        //             result.push(text)
-        //             if (result.length === numberOfPages) {
-        //                 const wholeString = result.toString()
-        //                 console.log('response sent')
-        //                 res.send(wholeString)
-        //             }
-        //         })
-        //         .catch(err => {
-        //             console.error('Error during OCR:', err)
-        //             res.send(err)
-        //         })
-        // }
-    }
-
-    convertPngFunc()
-
-})
-
-app.post('/text', (req, res) => {
-    console.log('text request rcvd')
-    const { pages, total } = req.body
-    let result = []
-    const readPngFunc = async () => {
-        for (let i = 0; i < pages.length; i++) {
+        for (let i = 0; i < pngPages.length; i++) {
 
             await Tesseract.recognize(
-                pages[i].content,
+                pngPages[i].content,
                 'eng',
             )
                 .then(({ data: { text } }) => {
                     result.push(text)
-                    if (result.length === total) {
+                    if (result.length === numberOfPages) {
                         const wholeString = result.toString()
-                        console.log('text response sent')
+                        console.log('response sent')
                         res.send(wholeString)
                     }
                 })
@@ -81,8 +51,40 @@ app.post('/text', (req, res) => {
         }
     }
 
-    readPngFunc()
+    convertPngFunc()
+
 })
+
+// app.post('/text', (req, res) => {
+//     console.log('text request rcvd')
+//     const { pages, total } = req.body
+//     console.log(pages)
+//     const pagesArray = pages.split('')
+//     let result = []
+//     const readPngFunc = async () => {
+//         for (let i = 0; i < total; i++) {
+
+//             await Tesseract.recognize(
+//                 pages[i].content,
+//                 'eng',
+//             )
+//                 .then(({ data: { text } }) => {
+//                     result.push(text)
+//                     if (result.length === total) {
+//                         const wholeString = result.toString()
+//                         console.log('text response sent')
+//                         res.send(wholeString)
+//                     }
+//                 })
+//                 .catch(err => {
+//                     console.error('Error during OCR:', err)
+//                     res.send(err)
+//                 })
+//         }
+//     }
+
+//     readPngFunc()
+// })
 
 app.post('/read', (req, res) => {
     console.log('reading request rcvd')
