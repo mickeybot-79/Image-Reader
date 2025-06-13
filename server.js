@@ -11,6 +11,7 @@ app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000
 
 app.post('/png', (req, res) => {
     console.log('image request rcvd')
+    console.log(req.origin)
     const { content } = req.body
     const convertPngFunc = async () => {
         let result = []
@@ -30,7 +31,7 @@ app.post('/png', (req, res) => {
         // console.log('image response sent')
         // res.send({'pages': pngPages, 'total': numberOfPages})
 
-        for (let i = 0; i < pngPages.length; i++) {
+        for (let i = 0; i < numberOfPages; i++) {
 
             await Tesseract.recognize(
                 pngPages[i].content,
