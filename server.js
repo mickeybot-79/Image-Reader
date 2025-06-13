@@ -9,11 +9,11 @@ app.use(express.static(__dirname + '/public'))
 app.use(express.json({limit: "50mb", extended: true}))
 app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000}))
 
-app.post('/member', (req, res) => {
-    console.log('member request rcvd')
+app.post('/png', (req, res) => {
+    console.log('image request rcvd')
     const { content } = req.body
-    const testFunc = async () => {
-        let result = []
+    const convertPngFunc = async () => {
+        //let result = []
         let numberOfPages = 0
         const pngPages = await pdfToPng(Buffer.from(content, 'base64'), {
             disableFontFace: false,
@@ -27,18 +27,50 @@ app.post('/member', (req, res) => {
         })
 
         numberOfPages = pngPages.length
+        console.log('image response sent')
+        res.send({'pages': pngPages, 'total': numberOfPages})
 
-        for (let i = 0; i < pngPages.length; i++) {
+        // for (let i = 0; i < pngPages.length; i++) {
+
+        //     await Tesseract.recognize(
+        //         pngPages[i].content,
+        //         'eng',
+        //     )
+        //         .then(({ data: { text } }) => {
+        //             result.push(text)
+        //             if (result.length === numberOfPages) {
+        //                 const wholeString = result.toString()
+        //                 console.log('response sent')
+        //                 res.send(wholeString)
+        //             }
+        //         })
+        //         .catch(err => {
+        //             console.error('Error during OCR:', err)
+        //             res.send(err)
+        //         })
+        // }
+    }
+
+    convertPngFunc()
+
+})
+
+app.post('/text', (req, res) => {
+    console.log('text request rcvd')
+    const { pages, total } = req.body
+    let result = []
+    const readPngFunc = async () => {
+        for (let i = 0; i < pages.length; i++) {
 
             await Tesseract.recognize(
-                pngPages[i].content,
+                pages[i].content,
                 'eng',
             )
                 .then(({ data: { text } }) => {
                     result.push(text)
-                    if (result.length === numberOfPages) {
+                    if (result.length === total) {
                         const wholeString = result.toString()
-                        console.log('response sent')
+                        console.log('text response sent')
                         res.send(wholeString)
                     }
                 })
@@ -49,11 +81,10 @@ app.post('/member', (req, res) => {
         }
     }
 
-    testFunc()
-
+    readPngFunc()
 })
 
-app.post('/text', (req, res) => {
+app.post('/read', (req, res) => {
     console.log('reading request rcvd')
     const { text } = req.body
     if (text.search("UnitedHealthcare") !== -1) {
