@@ -72,7 +72,7 @@ app.post('/read', (req, res) => {
         if (text.search("we've approved the service") !== -1) {
             const startIndex = text.indexOf("Member name")
             const nextLineBreak = text.indexOf("\n", startIndex)
-            const memberName = text.substring(startIndex + 14, nextLineBreak)
+            const memberName = text.substring(startIndex + 13, nextLineBreak)
             console.log('UnitedHealthcare member name:', memberName)
             res.send(memberName)
         } else {
