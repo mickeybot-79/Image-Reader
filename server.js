@@ -6,8 +6,19 @@ const PORT = process.env.PORT || 3500
 
 app.use(express.static(__dirname + '/public'))
 
-app.use(express.json({limit: "50mb", extended: true}))
-app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000}))
+app.use(express.json({ limit: "50mb", extended: true }))
+app.use(express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
+
+// Tesseract.recognize(
+//     'C:/Users/user/Downloads/test2.jpg',
+//     'eng',
+// )
+//     .then(({ data: { text } }) => {
+//         console.log(text)
+//     })
+//     .catch(err => {
+//         console.error('Error during OCR:', err)
+//     })
 
 app.post('/png', (req, res) => {
     console.log('image request rcvd')
@@ -28,8 +39,6 @@ app.post('/png', (req, res) => {
         })
 
         numberOfPages = pngPages.length
-        // console.log('image response sent')
-        // res.send({'pages': pngPages, 'total': numberOfPages})
 
         for (let i = 0; i < numberOfPages; i++) {
 
@@ -118,10 +127,10 @@ app.post('/read', (req, res) => {
             res.send('not auth')
         }
     } else if (text.search("Cook Childrens") !== -1) {
-        if (text.search("Authorization approval letters were sent") !== -1) {
+        if (text.search("Authorization approval letters were sent") !== -1 || text.search("Services were authorized") !== -1) {
             const startIndex = text.indexOf("Case Name")
             const nextLineBreak = text.indexOf("\n", startIndex)
-            const nextSpace = text.indexOf(" ", nextLineBreak)
+            const nextSpace = text.indexOf(" ", nextLineBreak + 1)
             const nextSpace2 = text.indexOf(" ", nextSpace + 1)
             const memberName = text.substring(nextLineBreak + 1, nextSpace2)
             console.log('Cook member name:', memberName)
